@@ -3,21 +3,14 @@ plugins {
 }
 
 group = 'su.weblock'
-def defaultVersion = '3.0.0'
-version = (findProperty('version') == 'unspecified') ? defaultVersion : version
+version = '1.0.0'
 
 java {
 	sourceCompatibility = '17'
 }
 
-def maven_url = System.getenv('maven_url')
-def defaultMavenUrl = "https://internal-repo.weblock.su/repository/maven-public/"
-print "Working with repo: ${maven_url ?: defaultMavenUrl}"
-
-repositories {
-    maven {
-        url = uri(maven_url ?: defaultMavenUrl)
-    }
+repositories {    
+    mavenCentral()     
 }
 
 dependencies {    
