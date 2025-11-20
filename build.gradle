@@ -1,0 +1,39 @@
+plugins {
+    id 'application'
+}
+
+group = 'su.weblock'
+def defaultVersion = '3.0.0'
+version = (findProperty('version') == 'unspecified') ? defaultVersion : version
+
+java {
+	sourceCompatibility = '17'
+}
+
+def maven_url = System.getenv('maven_url')
+def defaultMavenUrl = "https://internal-repo.weblock.su/repository/maven-public/"
+print "Working with repo: ${maven_url ?: defaultMavenUrl}"
+
+repositories {
+    maven {
+        url = uri(maven_url ?: defaultMavenUrl)
+    }
+}
+
+dependencies {    
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.1'
+    
+    implementation 'com.google.guava:guava:31.1-jre'
+    implementation 'org.apache.commons:commons-lang3:3.0'
+    implementation 'commons-fileupload:commons-fileupload:1.5'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.17.1'    
+    implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.17.1'    
+}
+
+application {
+    mainClass = 'su.weblock.schema.extrapolator.App'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
